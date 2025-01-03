@@ -2,7 +2,7 @@ import Post from '../models/PostModel.js';
 import User from '../models/UserModel.js';
 import mongoose from "mongoose";
 
-// ****get all posts**** //
+// Get all posts
 const getPosts = async (req, res) => {
     try {
         const posts = await Post.find()
@@ -12,7 +12,22 @@ const getPosts = async (req, res) => {
     }
 }
 
-// ****create new post**** //
+// Get a users posts
+const getUserPosts = async (req, res) => {
+
+    // Grab the authenticated user from req body.
+    const user = await User.findById(req.user._id);
+
+    try {
+        const posts = await Post.find({ user: user._id })
+        res.status(200).json({ success: 'Posts fetched: ', posts })
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
+// Create new post
 const addPost = async (req, res) => {
     // Grab the data from requests body.
     const { title, body } = req.body
@@ -33,7 +48,7 @@ const addPost = async (req, res) => {
     }
 }
 
-// ****delete post with id**** //
+// Delete post by ID
 const deletePost = async (req, res) => {
     // Check if the ID in the params is valid
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -61,7 +76,7 @@ const deletePost = async (req, res) => {
 }
 
 
-// ****update post with id**** //
+// Update post by ID
 const updatePost = async (req, res) => {
     // Grab the data from requests body.
     const { title, body } = req.body;
@@ -95,7 +110,6 @@ const updatePost = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 
-
 }
 
-export { getPosts, addPost, deletePost, updatePost };
+export { getPosts, getUserPosts, addPost, deletePost, updatePost };
