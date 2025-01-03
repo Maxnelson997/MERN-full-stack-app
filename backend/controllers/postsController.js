@@ -1,8 +1,6 @@
 import Post from '../models/PostModel.js';
 import mongoose from "mongoose";
 
-// https://programming.earthonline.us/can-you-answer-this-senior-level-javascript-promise-interview-question-69f7b6ffc2e7
-
 // ****get all posts**** //
 const getPosts = async (req, res) => {
     try {
