@@ -1,5 +1,6 @@
 import User from '../models/UserModel.js';
 import mongoose from "mongoose";
+import bcrypt from 'bcryptjs';
 
 // get all users
 const getUsers = async (req, res) => {
@@ -27,10 +28,12 @@ const registerUser = async (req, res) => {
         return res.status(500).json({ error: "Email already in use." })
     }
 
-
+    // Hash the password
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(password, salt)
 
     try {
-        const user = await User.create({ email, password })
+        const user = await User.create({ email, password: hashedPassword })
         res.status(200).json({ email })
     } catch (error) {
         res.status(500).json({ error: error.message });
