@@ -46,6 +46,12 @@ const deletePost = async (req, res) => {
         return res.status(400).json({ error: 'Post not found' });
     }
 
+    // Check if the user owns the post
+    const user = await User.findById(req.user._id)
+    if (!post.user.equals(user._id)) {
+        return res.status(401).json({ error: "Not authorized" })
+    }
+
     try {
         await post.deleteOne()
         res.status(200).json({ success: 'Post succesfully deleted', post })
@@ -74,6 +80,12 @@ const updatePost = async (req, res) => {
     const post = await Post.findById(req.params.id)
     if (!post) {
         return res.status(400).json({ error: 'Post not found' });
+    }
+
+    // Check if the user owns the post
+    const user = await User.findById(req.user._id)
+    if (!post.user.equals(user._id)) {
+        return res.status(401).json({ error: "Not authorized" })
     }
 
     try {
