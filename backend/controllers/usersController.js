@@ -1,8 +1,15 @@
 import User from '../models/UserModel.js';
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
+import jwt from "jsonwebtoken";
+import 'dotenv/config.js'
 
-// get all users
+// Creating JWT
+const createToken = (_id) => {
+    return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '10d' })
+}
+
+// Get all users
 const getUsers = async (req, res) => {
     try {
         const users = await User.find()
@@ -12,17 +19,17 @@ const getUsers = async (req, res) => {
     }
 }
 
-// register user
+// Register user
 const registerUser = async (req, res) => {
-    // grab email and password data from request body
+    // Grab email and password data from request body
     const { email, password } = req.body;
 
-    // check the field values
+    // Check the field values
     if (!email || !password) {
         return res.status(400).json({ error: "All fields are required." })
     }
 
-    // check if email exists
+    // Check if email exists
     const exists = await User.findOne({ email: email })
     if (exists) {
         return res.status(500).json({ error: "Email already in use." })
@@ -33,8 +40,12 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     try {
+        // Create user
         const user = await User.create({ email, password: hashedPassword })
-        res.status(200).json({ email })
+        // Create JWT - Json Web Token
+        const token = createToken(user._id)
+        // Send the token to FE
+        res.status(200).json({ email, token })
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -42,28 +53,31 @@ const registerUser = async (req, res) => {
 
 // login user
 const loginUser = async (req, res) => {
-    // grab email and password data from request body
+    // Grab email and password data from request body
     const { email, password } = req.body;
 
-    // check the field values
+    // Check the field values
     if (!email || !password) {
         return res.status(400).json({ error: "All fields are required." })
     }
 
-    // find user in DB
+    // Find user in DB
     const user = await User.findOne({ email: email })
     if (!user) {
         return res.status(500).json({ error: "incorrect email or password." })
     }
 
-    // check password
+    // Check password
     const match = await bcrypt.compare(password, user.password)
     if (!match) {
         return res.status(500).json({ error: "incorrect email or password." })
     }
 
     try {
-        res.status(200).json({ email })
+        // Create JWT - Json Web Token
+        const token = createToken(user._id)
+        // Send token to FE
+        res.status(200).json({ email, token })
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
