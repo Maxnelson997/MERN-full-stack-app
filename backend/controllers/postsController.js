@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 // Get all posts
 const getPosts = async (req, res) => {
     try {
-        const posts = await Post.find()
+        const posts = await Post.find().sort({ createdAt: "desc" })
         res.status(200).json({ success: 'posts fetched', posts })
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -19,7 +19,7 @@ const getUserPosts = async (req, res) => {
     const user = await User.findById(req.user._id);
 
     try {
-        const posts = await Post.find({ user: user._id })
+        const posts = await Post.find({ user: user._id }).sort({ createdAt: "desc" })
         res.status(200).json({ success: 'Posts fetched: ', posts })
     } catch (error) {
         res.status(500).json({ error: error.message });
