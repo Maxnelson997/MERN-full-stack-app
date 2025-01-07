@@ -3,20 +3,47 @@ import Alert from '../../components/Alert';
 
 const Login = () => {
 
-    // error state
+    // Error state
     const [error, setError] = useState(null)
 
-    return <section className='card'>
-        <h1 className='title'>Login to your account</h1>
+    // Form data state
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-        <form>
-            <input type="email" placeholder="Email Address" className='input' autoFocus />
-            <input type="password" placeholder="Password" className='input' autoFocus />
-            <button className='btn'>Login</button>
-        </form>
+    // Handle login
+    const handleLogin = (e) => {
+        e.preventDefault()
+        console.log(email, password);
+    }
 
-        {error && <Alert msg={error} />}
-    </section>
+
+    return (
+        <section className='card'>
+            <h1 className='title'>Login to your account</h1>
+
+            <form onSubmit={handleLogin}>
+                <input type="email"
+                    placeholder="Email Address"
+                    className='input'
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value) }}
+                    autoFocus />
+                <input type="password"
+                    placeholder="Password"
+                    className='input'
+                    value={password}
+                    onChange={(e) => { setPassword(e.target.value) }}
+                    autoFocus />
+                <button
+                    className='btn'
+                >
+                    Login
+                </button>
+            </form>
+
+            {error && <Alert msg={error} />}
+        </section>
+    )
 }
 
 export default Login
