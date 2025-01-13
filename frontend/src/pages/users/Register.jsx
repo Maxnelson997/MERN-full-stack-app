@@ -14,7 +14,6 @@ const Register = () => {
         passwordConfirm: ''
     })
 
-
     // Handle register
     const handleRegister = async (e) => {
         e.preventDefault()
