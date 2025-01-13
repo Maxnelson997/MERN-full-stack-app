@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Alert from '../../components/Alert';
+import { registerUser } from "../../controllers/usersController";
 
 
 const Register = () => {
@@ -15,10 +16,14 @@ const Register = () => {
 
 
     // Handle register
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
-        // console.log(email, password);
-        console.log(formData)
+        const { email, password, passwordConfirm } = formData;
+        try {
+            await registerUser(email, password, passwordConfirm);
+        } catch (error) {
+            setError(error.message)
+        }
     }
 
     return (
