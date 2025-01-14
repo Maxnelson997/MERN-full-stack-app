@@ -18,7 +18,8 @@ const Home = () => {
                 setPosts(data.posts)
                 setLoading(false)
             } catch (error) {
-                setError(error.message)
+                // setError(error.message)
+                console.log("error:", error.message)
             }
         }, 1000)
     }, [])
