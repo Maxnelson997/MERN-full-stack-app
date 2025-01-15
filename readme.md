@@ -1,6 +1,9 @@
 # MERN-full-stack-app
-# Mongo Express React Node full CRUD app
-[https://mern-full-stack-app-xuz2.onrender.com/](App Link)
+# Mongo Express React Node Full CRUD App
+
+## App Link
+You can view the deployed application here: [https://mern-full-stack-app-xuz2.onrender.com/](https://mern-full-stack-app-xuz2.onrender.com/)
+
 - register users
 - login users / full user authorization and authentication
 - create edit or delete blog posts
