@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { fetchUserPosts } from "../../controllers/postsController";
 import { UserContext } from '../../contexts/UserContext';
 import Post from '../../components/Post';
@@ -9,6 +9,9 @@ const Dashboard = () => {
     // Use user context
     const { user, setUser } = useContext(UserContext)
 
+    // Loading state
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         setTimeout(async () => {
             try {
@@ -18,7 +21,7 @@ const Dashboard = () => {
                 setUser({ ...user, posts })
 
                 // setUser({ ...user, posts })
-                // setLoading(false)
+                setLoading(false)
             } catch (error) {
                 // setError(error.message)
                 console.log("error:", error.message)
@@ -27,15 +30,17 @@ const Dashboard = () => {
     }, [])
 
     const handleDelete = (id) => {
-        console.log(id);
+
     }
 
-    console.log(user)
 
     return (
         <section className="card">
             <p>{user.email}</p>
             <h1 className="title">User Dashboard</h1>
+            {loading && (
+                <i className="fa-solid fa-spinner animate-spin text-3xl text-center block"></i>
+            )}
 
             {user.posts && user.posts.map(post => {
                 return <div key={post._id}>
