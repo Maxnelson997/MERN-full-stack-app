@@ -10,7 +10,7 @@ import Update from './pages/posts/Update'
 import AuthRoutes from './Routes/AuthRoutes'
 import GuestRoutes from './Routes/GuestRoutes'
 
-const App = () => {
+const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -32,4 +32,4 @@ const App = () => {
   )
 }
 
-export default App
+export default AppRouter
