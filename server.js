@@ -28,7 +28,7 @@ app.get("*", (req, res) => res.sendFile(path.join(__dirname, '/client/dist/index
 mongoose.connect(process.env.DB_URI, { dbName: 'demo_db' }).then(() => {
     console.log('connectd to monogo db successfuly.');
 
-    app.listen(4000, 'localhost', () => {
+    app.listen(4000, () => {
         console.log('server started on port 4000');
     });
 
