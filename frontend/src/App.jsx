@@ -6,6 +6,7 @@ import Register from './pages/users/Register';
 import Dashboard from './pages/users/Dashboard';
 import Home from './pages/posts/Home';
 import Create from './pages/posts/Create';
+import Update from './pages/posts/Update';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="create" element={<Create />} />
+          <Route path="update" element={<Update />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -66,4 +66,20 @@ const deletePost = async (_id) => {
     return data
 }
 
-export { fetchPosts, fetchUserPosts, createPost, deletePost }
+// delete post
+const updatePost = async (_id) => {
+    const res = await fetch(`/api/posts/${_id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    })
+    const data = await res.json()
+
+    if (!res.ok) {
+        throw Error(data.error)
+    }
+    return data
+}
+
+export { fetchPosts, fetchUserPosts, createPost, deletePost, updatePost }
