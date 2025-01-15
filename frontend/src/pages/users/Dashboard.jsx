@@ -38,17 +38,22 @@ const Dashboard = () => {
 
     const handleDelete = async (_id) => {
         setLoading(true)
-        try {
-            const data = await deletePost(_id)
-            const newPosts = user.posts.filter(post => post._id !== _id)
-            setLoading(false)
-            setSuccess(data.success)
-            setUser({ ...user, posts: newPosts })
-        } catch (error) {
-            setError(error.message)
-            // console.log("error:", error.message)
+        if (confirm("Confirm delete?")) {
+            try {
+                const data = await deletePost(_id)
+                setLoading(false)
+                setSuccess(data.success)
+                const newPosts = user.posts.filter(post => post._id !== _id)
+                setUser({ ...user, posts: newPosts })
+            } catch (error) {
+                setError(error.message)
+                // console.log("error:", error.message)
+            }
         }
+
+
     }
+
 
 
     return (

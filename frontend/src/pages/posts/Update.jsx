@@ -23,7 +23,8 @@ const Update = () => {
         setLoading(true)
         setTimeout(async () => {
             try {
-                const data = await updatePost({ title, body })
+                const data = await updatePost(state._id, title, body)
+
                 setPosts([...posts, data.post])
                 setLoading(false)
                 navigate('/dashboard')
