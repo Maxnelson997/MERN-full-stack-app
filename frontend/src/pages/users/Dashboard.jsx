@@ -4,6 +4,8 @@ import { UserContext } from '../../contexts/UserContext'
 import Post from '../../components/Post'
 import { Link } from 'react-router-dom'
 import { deletePost } from '../../controllers/postsController'
+import Alert from "../../components/Alert"
+import Success from "../../components/Success"
 
 const Dashboard = () => {
 
@@ -12,6 +14,9 @@ const Dashboard = () => {
 
     // Loading state
     const [loading, setLoading] = useState(true)
+
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     useEffect(() => {
         setTimeout(async () => {
@@ -37,10 +42,11 @@ const Dashboard = () => {
             const data = await deletePost(_id)
             const newPosts = user.posts.filter(post => post._id !== _id)
             setLoading(false)
+            setSuccess(data.success)
             setUser({ ...user, posts: newPosts })
         } catch (error) {
-            // setError(error.message)
-            console.log("error:", error.message)
+            setError(error.message)
+            // console.log("error:", error.message)
         }
     }
 
@@ -49,6 +55,9 @@ const Dashboard = () => {
         <section className="card">
             <p>{user.email}</p>
             <h1 className="title">User Dashboard</h1>
+
+            {success && <Success msg={success} />}
+            {error && <Alert msg={error} />}
             {loading && (
                 <i className="fa-solid fa-spinner animate-spin text-3xl text-center block"></i>
             )}
