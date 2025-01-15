@@ -21,10 +21,11 @@ const Layout = () => {
                 <Link title="Home" to="/" className="fa-solid fa-house nav-link"></Link>
                 {user.email ? (
                     <div className='flex items-center gap-2'>
-                        <Link title="Create Post" to="/create" className="fa-solid fa-circle-post nav-link">
+                        <Link title="Create Post" to="/create" className="fa-solid fa-circle-plus nav-link">
                         </Link>
                         <Link title="Dashboard" to="/dashboard" className="fa-solid fa-circle-user nav-link">
                         </Link>
+
                         <button title="logout" onClick={handleLogout} className="fa-solid fa-right-from-bracket nav-link"></button>
                     </div>
                 ) : (

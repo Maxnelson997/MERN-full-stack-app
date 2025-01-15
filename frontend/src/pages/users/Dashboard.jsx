@@ -1,8 +1,9 @@
-import { useEffect, useContext, useState } from 'react';
-import { fetchUserPosts } from "../../controllers/postsController";
-import { UserContext } from '../../contexts/UserContext';
-import Post from '../../components/Post';
-import { Link } from 'react-router-dom';
+import { useEffect, useContext, useState } from 'react'
+import { fetchUserPosts } from "../../controllers/postsController"
+import { UserContext } from '../../contexts/UserContext'
+import Post from '../../components/Post'
+import { Link } from 'react-router-dom'
+import { deletePost } from '../../controllers/postsController'
 
 const Dashboard = () => {
 
@@ -14,9 +15,10 @@ const Dashboard = () => {
 
     useEffect(() => {
         setTimeout(async () => {
+            setLoading(true)
             try {
                 const data = await fetchUserPosts()
-                const { posts } = data;
+                const { posts } = data
 
                 setUser({ ...user, posts })
 
@@ -29,8 +31,17 @@ const Dashboard = () => {
         }, 1000)
     }, [])
 
-    const handleDelete = (id) => {
-
+    const handleDelete = async (_id) => {
+        setLoading(true)
+        try {
+            const data = await deletePost(_id)
+            const newPosts = user.posts.filter(post => post._id !== _id)
+            setLoading(false)
+            setUser({ ...user, posts: newPosts })
+        } catch (error) {
+            // setError(error.message)
+            console.log("error:", error.message)
+        }
     }
 
 
@@ -62,4 +73,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard;
+export default Dashboard
