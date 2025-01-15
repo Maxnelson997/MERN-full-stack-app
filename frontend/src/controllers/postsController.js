@@ -16,7 +16,7 @@ const fetchPosts = async () => {
 const fetchUserPosts = async () => {
     const res = await fetch('/api/posts/user', {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     })
     const data = await res.json()
@@ -29,7 +29,6 @@ const fetchUserPosts = async () => {
 
 // create post 
 const createPost = async ({ title, body }) => {
-
     if (!title || !body) {
         throw Error("All fields are required");
     }
@@ -37,15 +36,13 @@ const createPost = async ({ title, body }) => {
     const res = await fetch('/api/posts/', {
         method: "POST",
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ title, body }),
     })
 
     const data = await res.json()
-
-    console.log("post created: ", data)
 
     if (!res.ok) {
         throw Error(data.error)

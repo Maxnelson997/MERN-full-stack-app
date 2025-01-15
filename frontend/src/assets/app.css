@@ -23,3 +23,10 @@
         @apply block w-full bg-indigo-500 text-white rounded-md p-2
     }
 }
+
+.alert {
+    display: flex;
+    gap: 10px;
+    padding-left: 10px;
+    align-items: center;
+}
